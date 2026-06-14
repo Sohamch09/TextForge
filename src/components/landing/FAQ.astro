@@ -1,0 +1,120 @@
+---
+const faqs = [
+  {
+    q: 'What is TextForge?',
+    a: 'TextForge is a modern, free text utility platform that helps you clean, transform, and analyze text instantly. It includes tools for removing duplicates, sorting lines, counting words, converting case, and more — all in a premium, ad-free interface.',
+  },
+  {
+    q: 'Is TextForge really free?',
+    a: 'Yes, completely free. There are no premium plans, no feature limitations, and no hidden fees. Every tool is fully available to everyone.',
+  },
+  {
+    q: 'Is my data secure?',
+    a: 'Absolutely. All text processing happens entirely in your browser using JavaScript. Your text is never sent to any server, never stored, and never shared. There are no analytics tracking your content.',
+  },
+  {
+    q: 'Can I process large text files?',
+    a: 'Yes. Since all processing is client-side, TextForge can handle large texts limited only by your browser\'s memory. For most use cases, it can process hundreds of thousands of lines instantly.',
+  },
+  {
+    q: 'What makes TextForge different from TextFixer or similar tools?',
+    a: 'TextForge offers a modern, responsive design, real-time processing without page reloads, a dark-mode interface, combined transformations in a single tool, keyboard shortcuts, no advertisements, and complete privacy — all features that legacy tools lack.',
+  },
+  {
+    q: 'Does TextForge work on mobile devices?',
+    a: 'Yes. TextForge is built mobile-first with responsive layouts that work beautifully on phones, tablets, and desktops. Every tool is fully functional on touch devices.',
+  },
+  {
+    q: 'Can I use keyboard shortcuts?',
+    a: 'Yes. On tool pages, you can use Ctrl+Shift+C to copy the output, Ctrl+Shift+D to download as a text file, and Ctrl+Shift+X to clear all text. More shortcuts are planned.',
+  },
+  {
+    q: 'Do I need to create an account?',
+    a: 'No. TextForge requires no sign-up, no login, and no account. Just open any tool and start working immediately.',
+  },
+];
+---
+
+<section class="section faq" id="faq">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow mono">FAQ</span>
+      <h2 class="display-lg">Frequently Asked <span class="text-gradient">Questions</span></h2>
+      <p class="body-lg text-secondary">
+        Everything you need to know about TextForge.
+      </p>
+    </div>
+
+    <div class="faq-list" id="faq-list">
+      {faqs.map((faq, i) => (
+        <div class="accordion-item">
+          <button
+            class="accordion-trigger"
+            id={`faq-trigger-${i}`}
+            aria-expanded="false"
+            aria-controls={`faq-content-${i}`}
+          >
+            <span>{faq.q}</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div
+            class="accordion-content"
+            id={`faq-content-${i}`}
+            role="region"
+            aria-labelledby={`faq-trigger-${i}`}
+          >
+            <p>{faq.a}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--sp-12);
+  }
+
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--accent-indigo);
+    margin-bottom: var(--sp-4);
+  }
+
+  .section-header h2 {
+    margin-bottom: var(--sp-4);
+  }
+
+  .faq-list {
+    max-width: 768px;
+    margin: 0 auto;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.accordion-trigger').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const expanded = trigger.getAttribute('aria-expanded') === 'true';
+      const contentId = trigger.getAttribute('aria-controls');
+      const content = document.getElementById(contentId);
+
+      // Close all others
+      document.querySelectorAll('.accordion-trigger').forEach(otherTrigger => {
+        if (otherTrigger !== trigger) {
+          otherTrigger.setAttribute('aria-expanded', 'false');
+          const otherId = otherTrigger.getAttribute('aria-controls');
+          document.getElementById(otherId)?.classList.remove('open');
+        }
+      });
+
+      // Toggle current
+      trigger.setAttribute('aria-expanded', String(!expanded));
+      content?.classList.toggle('open');
+    });
+  });
+</script>

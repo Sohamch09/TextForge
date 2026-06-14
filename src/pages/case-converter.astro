@@ -1,0 +1,131 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Case Converter — TextForge"
+  description="Convert text between UPPERCASE, lowercase, Title Case, Sentence case, and tOGGLE cASE instantly with one click."
+>
+  <div class="container tool-page">
+    <div class="tool-header">
+      <div class="breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <span>Case Converter</span>
+      </div>
+      <h1><span class="text-gradient">Case</span> Converter</h1>
+      <p class="tool-desc">Convert text between different cases with one click. Instant preview, zero friction.</p>
+    </div>
+
+    <!-- Case Buttons -->
+    <div class="case-options">
+      <h3 class="options-label">Select Case</h3>
+      <div class="case-btn-group" id="case-buttons">
+        <button class="case-btn" data-case="upper">UPPERCASE</button>
+        <button class="case-btn" data-case="lower">lowercase</button>
+        <button class="case-btn" data-case="title">Title Case</button>
+        <button class="case-btn" data-case="sentence">Sentence case</button>
+        <button class="case-btn" data-case="toggle">tOGGLE cASE</button>
+      </div>
+    </div>
+
+    <!-- Panels -->
+    <div class="split-panels">
+      <div class="panel glass-card-sm">
+        <div class="panel-header">
+          <span class="panel-title">Input</span>
+          <button class="btn-icon" id="case-clear" data-tooltip="Clear" aria-label="Clear">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </button>
+        </div>
+        <textarea class="textarea" id="case-input" placeholder="Paste or type your text here..." spellcheck="false" aria-label="Input text" style="border:none;border-radius:0;min-height:320px;"></textarea>
+        <div class="count-bar">
+          <span><strong id="case-in-chars">0</strong> chars</span>
+          <span><strong id="case-in-words">0</strong> words</span>
+        </div>
+      </div>
+      <div class="panel glass-card-sm">
+        <div class="panel-header">
+          <span class="panel-title">Output</span>
+          <div class="action-bar">
+            <button class="btn-icon" id="case-copy" data-tooltip="Copy" aria-label="Copy">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+            <button class="btn-icon" id="case-download" data-tooltip="Download" aria-label="Download">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            </button>
+          </div>
+        </div>
+        <textarea class="textarea textarea-readonly" id="case-output" readonly placeholder="Converted text will appear here..." aria-label="Output text" style="border:none;border-radius:0;min-height:320px;"></textarea>
+        <div class="count-bar">
+          <span><strong id="case-out-chars">0</strong> chars</span>
+          <span><strong id="case-out-words">0</strong> words</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .tool-page { padding-top: var(--sp-8); padding-bottom: var(--sp-16); }
+
+  .case-options {
+    margin-bottom: var(--sp-6);
+  }
+
+  .options-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: var(--sp-3);
+  }
+
+  .panel { overflow: hidden; display: flex; flex-direction: column; }
+</style>
+
+<script>
+  import { toUpperCase, toLowerCase, toTitleCase, toSentenceCase, toggleCase, countWords, countCharacters, copyToClipboard, downloadAsText, formatNumber } from '../scripts/text-utils.js';
+
+  const input = document.getElementById('case-input');
+  const output = document.getElementById('case-output');
+  const buttons = document.querySelectorAll('#case-buttons .case-btn');
+  let activeCase = '';
+
+  const converters = {
+    upper: toUpperCase,
+    lower: toLowerCase,
+    title: toTitleCase,
+    sentence: toSentenceCase,
+    toggle: toggleCase,
+  };
+
+  function process() {
+    const text = input.value;
+    const fn = converters[activeCase];
+    const result = fn ? fn(text) : text;
+    output.value = result;
+
+    document.getElementById('case-in-chars').textContent = formatNumber(countCharacters(text));
+    document.getElementById('case-in-words').textContent = formatNumber(countWords(text));
+    document.getElementById('case-out-chars').textContent = formatNumber(countCharacters(result));
+    document.getElementById('case-out-words').textContent = formatNumber(countWords(result));
+  }
+
+  // Bind case buttons
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCase = btn.dataset.case;
+      process();
+    });
+  });
+
+  input.addEventListener('input', process);
+
+  document.getElementById('case-clear')?.addEventListener('click', () => { input.value = ''; process(); window.showToast?.('Cleared', 'info'); });
+  document.getElementById('case-copy')?.addEventListener('click', async () => { const ok = await copyToClipboard(output.value); window.showToast?.(ok ? 'Copied!' : 'Failed', ok ? 'success' : 'error'); });
+  document.getElementById('case-download')?.addEventListener('click', () => { downloadAsText(output.value, 'case-converted.txt'); window.showToast?.('Downloaded', 'success'); });
+</script>

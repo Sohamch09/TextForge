@@ -1,0 +1,197 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Terms of Service — TextForge"
+  description="TextForge Terms of Service. Simple, fair terms for using our free text utility platform."
+>
+  <div class="container legal-page">
+    <div class="tool-header">
+      <div class="breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <span>Terms of Service</span>
+      </div>
+      <h1><span class="text-gradient">Terms</span> of Service</h1>
+      <p class="tool-desc">Last updated: June 14, 2025</p>
+    </div>
+
+    <article class="legal-content">
+      <section>
+        <h2>Agreement to Terms</h2>
+        <p>
+          By accessing or using TextForge ("the Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use the Service.
+        </p>
+        <p>
+          TextForge is a free, open-source text utility platform. These Terms are designed to be simple and fair.
+        </p>
+      </section>
+
+      <section>
+        <h2>Description of Service</h2>
+        <p>
+          TextForge provides browser-based text processing tools including, but not limited to:
+        </p>
+        <ul>
+          <li>Smart Text Cleaner</li>
+          <li>Remove Duplicate Lines</li>
+          <li>Remove Empty Lines</li>
+          <li>Sort Lines</li>
+          <li>Word Counter</li>
+          <li>Case Converter</li>
+        </ul>
+        <p>
+          All text processing occurs entirely within your web browser. No data is transmitted to or stored on our servers.
+        </p>
+      </section>
+
+      <section>
+        <h2>Use of the Service</h2>
+        <p>You agree to use TextForge only for lawful purposes. You may not:</p>
+        <ul>
+          <li>Use the Service to process content that violates any applicable laws or regulations.</li>
+          <li>Attempt to interfere with, disrupt, or overload the Service or its infrastructure.</li>
+          <li>Attempt to gain unauthorized access to any part of the Service.</li>
+          <li>Use automated systems (bots, scrapers) to access the Service in a manner that places excessive load on our infrastructure.</li>
+          <li>Reverse engineer, decompile, or disassemble the Service beyond what is permitted by applicable law.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>No Account Required</h2>
+        <p>
+          TextForge does not require you to create an account, provide personal information, or log in. The Service is freely available to all users without registration.
+        </p>
+      </section>
+
+      <section>
+        <h2>Intellectual Property</h2>
+        <p>
+          The TextForge name, logo, design, and code are the intellectual property of TextForge and its contributors. You may not use the TextForge brand or logo without prior written permission, except as necessary to link to or reference the Service.
+        </p>
+        <p>
+          <strong>Your content remains yours.</strong> TextForge makes no claim of ownership over any text you process using the Service. Since all processing happens in your browser, we never have access to your content.
+        </p>
+      </section>
+
+      <section>
+        <h2>Disclaimer of Warranties</h2>
+        <p>
+          TextForge is provided <strong>"as is"</strong> and <strong>"as available"</strong> without warranties of any kind, either express or implied, including but not limited to:
+        </p>
+        <ul>
+          <li>Warranties of merchantability or fitness for a particular purpose.</li>
+          <li>Warranties that the Service will be uninterrupted, error-free, or secure.</li>
+          <li>Warranties regarding the accuracy or reliability of results produced by the tools.</li>
+        </ul>
+        <p>
+          While we strive to ensure our tools produce accurate results, you should always verify critical output independently. TextForge is not a substitute for professional text processing tools in mission-critical applications.
+        </p>
+      </section>
+
+      <section>
+        <h2>Limitation of Liability</h2>
+        <p>
+          To the maximum extent permitted by applicable law, TextForge and its contributors shall not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits, data, or goodwill, arising out of or in connection with your use of the Service.
+        </p>
+        <p>
+          Since all processing occurs in your browser and we do not collect, store, or transmit your data, our exposure to liability is inherently limited.
+        </p>
+      </section>
+
+      <section>
+        <h2>Availability</h2>
+        <p>
+          We strive to keep TextForge available at all times, but we do not guarantee uninterrupted access. The Service may be temporarily unavailable due to maintenance, updates, or circumstances beyond our control.
+        </p>
+      </section>
+
+      <section>
+        <h2>Modifications to Terms</h2>
+        <p>
+          We reserve the right to modify these Terms at any time. Changes will be posted on this page with an updated "Last updated" date. Your continued use of the Service after changes are posted constitutes your acceptance of the revised Terms.
+        </p>
+      </section>
+
+      <section>
+        <h2>Modifications to Service</h2>
+        <p>
+          We reserve the right to modify, suspend, or discontinue any part of the Service at any time, with or without notice. We shall not be liable to you or any third party for any modification, suspension, or discontinuation of the Service.
+        </p>
+      </section>
+
+      <section>
+        <h2>Governing Law</h2>
+        <p>
+          These Terms shall be governed by and construed in accordance with applicable laws, without regard to conflict of law principles. Any disputes arising from these Terms or your use of the Service shall be resolved through good-faith negotiation before pursuing formal legal remedies.
+        </p>
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <p>
+          If you have any questions about these Terms, you can reach us by opening an issue on our GitHub repository or contacting us through the channels listed in the website footer.
+        </p>
+      </section>
+    </article>
+  </div>
+</Layout>
+
+<style>
+  .legal-page {
+    padding-top: var(--sp-8);
+    padding-bottom: var(--sp-16);
+  }
+
+  .legal-content {
+    max-width: 768px;
+  }
+
+  .legal-content section {
+    margin-bottom: var(--sp-10);
+  }
+
+  .legal-content h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--sp-4);
+    letter-spacing: -0.01em;
+  }
+
+  .legal-content p {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--sp-4);
+  }
+
+  .legal-content ul,
+  .legal-content ol {
+    padding-left: var(--sp-6);
+    margin-bottom: var(--sp-4);
+  }
+
+  .legal-content li {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--sp-2);
+  }
+
+  .legal-content strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .legal-content a {
+    color: var(--accent-indigo);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .legal-content a:hover {
+    color: var(--accent-violet);
+  }
+</style>

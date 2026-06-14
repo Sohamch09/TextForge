@@ -1,0 +1,166 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Privacy Policy — TextForge"
+  description="TextForge Privacy Policy. Learn how we handle your data — spoiler: we don't collect any."
+>
+  <div class="container legal-page">
+    <div class="tool-header">
+      <div class="breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <span>Privacy Policy</span>
+      </div>
+      <h1><span class="text-gradient">Privacy</span> Policy</h1>
+      <p class="tool-desc">Last updated: June 14, 2025</p>
+    </div>
+
+    <article class="legal-content">
+      <section>
+        <h2>Our Commitment to Privacy</h2>
+        <p>
+          At TextForge, privacy isn't just a feature — it's a core principle. We believe that your text data belongs to you and only you. That's why TextForge is designed to process everything entirely in your browser, with <strong>zero data collection</strong>.
+        </p>
+      </section>
+
+      <section>
+        <h2>Data We Collect</h2>
+        <p><strong>None.</strong></p>
+        <p>
+          TextForge does not collect, store, transmit, or process any personal data on our servers. Specifically:
+        </p>
+        <ul>
+          <li>We do <strong>not</strong> collect your text input or output.</li>
+          <li>We do <strong>not</strong> use cookies for tracking purposes.</li>
+          <li>We do <strong>not</strong> use analytics or tracking scripts.</li>
+          <li>We do <strong>not</strong> require account creation or login.</li>
+          <li>We do <strong>not</strong> store any personal information.</li>
+          <li>We do <strong>not</strong> serve advertisements.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>How TextForge Works</h2>
+        <p>
+          All text processing on TextForge happens <strong>entirely within your web browser</strong> using client-side JavaScript. When you paste or type text into any of our tools:
+        </p>
+        <ol>
+          <li>Your text is processed locally in your browser's memory.</li>
+          <li>No data is sent to any server, API, or third-party service.</li>
+          <li>When you close the browser tab, all data is cleared from memory.</li>
+        </ol>
+        <p>
+          The only exception is the optional <strong>session auto-save</strong> feature on some tools, which uses your browser's <code>sessionStorage</code> to preserve your input if you accidentally refresh the page. This data is stored locally in your browser only, never transmitted, and is automatically cleared when you close the browser tab.
+        </p>
+      </section>
+
+      <section>
+        <h2>Third-Party Services</h2>
+        <p>TextForge uses the following third-party services for functionality only:</p>
+        <ul>
+          <li><strong>Google Fonts</strong> — to load the Inter and JetBrains Mono typefaces. Google may log standard web server access information (IP address, browser type) when fonts are loaded. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's Privacy Policy</a> for details.</li>
+        </ul>
+        <p>
+          No other third-party scripts, analytics platforms, ad networks, or tracking services are used.
+        </p>
+      </section>
+
+      <section>
+        <h2>Cookies</h2>
+        <p>
+          TextForge does <strong>not</strong> set any cookies. We do not use cookies for tracking, analytics, advertising, or any other purpose.
+        </p>
+      </section>
+
+      <section>
+        <h2>Children's Privacy</h2>
+        <p>
+          TextForge does not knowingly collect any personal information from anyone, including children under the age of 13. Since we do not collect any data at all, there is no risk of children's data being collected or stored.
+        </p>
+      </section>
+
+      <section>
+        <h2>Changes to This Policy</h2>
+        <p>
+          We may update this Privacy Policy from time to time. Any changes will be reflected on this page with an updated "Last updated" date. Since we don't collect email addresses or personal data, we cannot notify you directly of changes — we encourage you to review this page periodically.
+        </p>
+      </section>
+
+      <section>
+        <h2>Contact</h2>
+        <p>
+          If you have any questions about this Privacy Policy, you can reach us by opening an issue on our GitHub repository or contacting us through the channels listed in the website footer.
+        </p>
+      </section>
+    </article>
+  </div>
+</Layout>
+
+<style>
+  .legal-page {
+    padding-top: var(--sp-8);
+    padding-bottom: var(--sp-16);
+  }
+
+  .legal-content {
+    max-width: 768px;
+  }
+
+  .legal-content section {
+    margin-bottom: var(--sp-10);
+  }
+
+  .legal-content h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--sp-4);
+    letter-spacing: -0.01em;
+  }
+
+  .legal-content p {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--sp-4);
+  }
+
+  .legal-content ul,
+  .legal-content ol {
+    padding-left: var(--sp-6);
+    margin-bottom: var(--sp-4);
+  }
+
+  .legal-content li {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: var(--sp-2);
+  }
+
+  .legal-content strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .legal-content code {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    background: var(--surface-3);
+    padding: 2px 6px;
+    border-radius: var(--radius-xs);
+    color: var(--accent-indigo);
+  }
+
+  .legal-content a {
+    color: var(--accent-indigo);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .legal-content a:hover {
+    color: var(--accent-violet);
+  }
+</style>

@@ -1,0 +1,108 @@
+---
+const rows = [
+  { feature: 'Modern UI/UX Design', legacy: false, textforge: true },
+  { feature: 'Dark Mode', legacy: false, textforge: true },
+  { feature: 'Real-Time Processing', legacy: false, textforge: true },
+  { feature: 'Mobile Responsive', legacy: false, textforge: true },
+  { feature: 'Client-Side Privacy', legacy: false, textforge: true },
+  { feature: 'Keyboard Shortcuts', legacy: false, textforge: true },
+  { feature: 'Drag & Drop Files', legacy: false, textforge: true },
+  { feature: 'Live Statistics', legacy: false, textforge: true },
+  { feature: 'Combined Transformations', legacy: false, textforge: true },
+  { feature: 'Session Auto-Save', legacy: false, textforge: true },
+  { feature: 'Accessible (WCAG)', legacy: false, textforge: true },
+];
+---
+
+<section class="section comparison" id="comparison">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow mono">COMPARISON</span>
+      <h2 class="display-lg">TextForge vs <span class="text-gradient">Legacy Tools</span></h2>
+      <p class="body-lg text-secondary">
+        See how TextForge compares to outdated text utility websites.
+      </p>
+    </div>
+
+    <div class="scroll-hint hide-desktop">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8l4 4-4 4M7 16l-4-4 4-4M3 12h18"/></svg>
+      Swipe to view comparison
+    </div>
+
+    <div class="comparison-wrapper">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Legacy Tools</th>
+            <th>TextForge</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(row => (
+            <tr>
+              <td>{row.feature}</td>
+              <td>
+                <span class={row.legacy ? 'check' : 'cross'}>
+                  {row.legacy ? '✓' : '✗'}
+                </span>
+              </td>
+              <td>
+                <span class={row.textforge ? 'check' : 'cross'}>
+                  {row.textforge ? '✓' : '✗'}
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--sp-12);
+  }
+
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--accent-indigo);
+    margin-bottom: var(--sp-4);
+  }
+
+  .section-header h2 {
+    margin-bottom: var(--sp-4);
+  }
+
+  .comparison-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    overflow-x: auto;
+    border-radius: var(--radius-xl);
+  }
+
+  .comparison-table {
+    background: var(--surface-1);
+  }
+
+  .scroll-hint {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-2);
+    font-size: 0.8125rem;
+    color: var(--text-tertiary);
+    margin-bottom: var(--sp-4);
+  }
+
+  @media (max-width: 640px) {
+    .hide-desktop {
+      display: flex;
+    }
+  }
+</style>

@@ -1,0 +1,118 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Word Counter — TextForge"
+  description="Count words, characters, sentences, paragraphs, reading time, speaking time, and average word length in real-time."
+>
+  <div class="container tool-page">
+    <div class="tool-header">
+      <div class="breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <span>Word Counter</span>
+      </div>
+      <h1><span class="text-gradient">Word</span> Counter</h1>
+      <p class="tool-desc">Detailed text analytics — words, characters, sentences, paragraphs, reading time, and more. Updated in real-time.</p>
+    </div>
+
+    <!-- Input -->
+    <div class="glass-card-sm" style="overflow:hidden;margin-bottom:var(--sp-8);">
+      <div class="panel-header">
+        <span class="panel-title">Your Text</span>
+        <button class="btn-icon" id="wc-clear" data-tooltip="Clear" aria-label="Clear">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </button>
+      </div>
+      <textarea class="textarea" id="wc-input" placeholder="Start typing or paste your text here..." spellcheck="false" aria-label="Input text" style="border:none;border-radius:0;min-height:240px;"></textarea>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid" id="wc-stats">
+      <div class="stat-card">
+        <div class="stat-icon indigo">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+        </div>
+        <div class="stat-label">Words</div>
+        <div class="stat-value" id="wc-words">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon violet">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+        </div>
+        <div class="stat-label">Characters</div>
+        <div class="stat-value" id="wc-chars">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon fuchsia">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+        </div>
+        <div class="stat-label">Characters (no spaces)</div>
+        <div class="stat-value" id="wc-chars-nospace">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon cyan">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><path d="M12 2v4M12 18v4"/></svg>
+        </div>
+        <div class="stat-label">Sentences</div>
+        <div class="stat-value" id="wc-sentences">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon indigo">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 10h16M4 14h10M4 18h6"/></svg>
+        </div>
+        <div class="stat-label">Paragraphs</div>
+        <div class="stat-value" id="wc-paragraphs">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon success">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <div class="stat-label">Reading Time</div>
+        <div class="stat-value" id="wc-reading">0 min</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon warning">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg>
+        </div>
+        <div class="stat-label">Speaking Time</div>
+        <div class="stat-value" id="wc-speaking">0 min</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon violet">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9h16M4 15h16M10 3L8 21M16 3l-2 18"/></svg>
+        </div>
+        <div class="stat-label">Avg Word Length</div>
+        <div class="stat-value" id="wc-avglen">0</div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .tool-page { padding-top: var(--sp-8); padding-bottom: var(--sp-16); }
+</style>
+
+<script>
+  import { countWords, countCharacters, countSentences, countParagraphs, calculateReadingTime, calculateSpeakingTime, averageWordLength, formatNumber } from '../scripts/text-utils.js';
+
+  const input = document.getElementById('wc-input');
+
+  function process() {
+    const text = input.value;
+    const words = countWords(text);
+
+    document.getElementById('wc-words').textContent = formatNumber(words);
+    document.getElementById('wc-chars').textContent = formatNumber(countCharacters(text, true));
+    document.getElementById('wc-chars-nospace').textContent = formatNumber(countCharacters(text, false));
+    document.getElementById('wc-sentences').textContent = formatNumber(countSentences(text));
+    document.getElementById('wc-paragraphs').textContent = formatNumber(countParagraphs(text));
+    document.getElementById('wc-reading').textContent = calculateReadingTime(words);
+    document.getElementById('wc-speaking').textContent = calculateSpeakingTime(words);
+    document.getElementById('wc-avglen').textContent = averageWordLength(text);
+  }
+
+  input.addEventListener('input', process);
+  document.getElementById('wc-clear')?.addEventListener('click', () => { input.value = ''; process(); window.showToast?.('Cleared', 'info'); });
+</script>

@@ -1,0 +1,165 @@
+---
+const benefits = [
+  {
+    title: 'Lightning Fast',
+    desc: 'All processing happens client-side in your browser. No server round-trips means instant results, even with large text files.',
+    stat: '< 1ms',
+    statLabel: 'Processing Time',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><polyline points="12 6 12 12 16 14"/></svg>',
+  },
+  {
+    title: 'Completely Private',
+    desc: 'Your text never leaves your browser. No data is sent to any server. No analytics, no tracking, no cookies — just tools.',
+    stat: '0',
+    statLabel: 'Data Collected',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
+  },
+  {
+    title: 'Always Free',
+    desc: 'No premium plans, no feature gates, no freemium walls. Every tool is fully available to everyone, forever.',
+    stat: '$0',
+    statLabel: 'Forever',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
+  },
+  {
+    title: 'Professional Grade',
+    desc: 'Built with production-quality code and tested edge cases. Handles large texts, Unicode, and special characters reliably.',
+    stat: '100%',
+    statLabel: 'Reliability',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+  },
+];
+---
+
+<section class="section benefits" id="benefits">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow mono">WHY TEXTFORGE</span>
+      <h2 class="display-lg">Why Professionals Choose<br /><span class="text-gradient">TextForge</span></h2>
+      <p class="body-lg text-secondary">
+        Built by developers, for everyone who works with text.
+      </p>
+    </div>
+
+    <div class="benefits-grid stagger-children">
+      {benefits.map(benefit => (
+        <div class="benefit-card">
+          <div class="benefit-top">
+            <div class="benefit-icon">
+              <Fragment set:html={benefit.icon} />
+            </div>
+            <div class="benefit-stat-block">
+              <span class="benefit-stat-value">{benefit.stat}</span>
+              <span class="benefit-stat-label">{benefit.statLabel}</span>
+            </div>
+          </div>
+          <h3 class="benefit-title">{benefit.title}</h3>
+          <p class="benefit-desc">{benefit.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--sp-12);
+  }
+
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--accent-indigo);
+    margin-bottom: var(--sp-4);
+  }
+
+  .section-header h2 {
+    margin-bottom: var(--sp-4);
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-6);
+  }
+
+  @media (max-width: 768px) {
+    .benefits-grid { grid-template-columns: 1fr; }
+  }
+
+  .benefit-card {
+    padding: var(--sp-8);
+    border-radius: var(--radius-xl);
+    background: var(--surface-1);
+    border: 1px solid var(--border-subtle);
+    transition: border-color var(--transition-base), transform var(--transition-base);
+  }
+
+  .benefit-card:hover {
+    border-color: var(--border-default);
+    transform: translateY(-2px);
+  }
+
+  .benefit-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: var(--sp-5);
+  }
+
+  .benefit-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+    background: rgba(99,102,241,0.10);
+    color: var(--accent-indigo);
+  }
+
+  .benefit-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .benefit-stat-block {
+    text-align: right;
+  }
+
+  .benefit-stat-value {
+    display: block;
+    font-size: 1.75rem;
+    font-weight: 800;
+    background: var(--gradient-accent-h);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .benefit-stat-label {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .benefit-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--sp-2);
+  }
+
+  .benefit-desc {
+    font-size: 0.9375rem;
+    color: var(--text-tertiary);
+    line-height: 1.7;
+  }
+</style>

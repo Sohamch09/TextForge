@@ -1,0 +1,115 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Sort Lines — TextForge"
+  description="Sort text lines alphabetically with ascending, descending, case-sensitive, case-insensitive, and natural sorting options."
+>
+  <div class="container tool-page">
+    <div class="tool-header">
+      <div class="breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <span>Sort Lines</span>
+      </div>
+      <h1><span class="text-gradient">Sort</span> Lines</h1>
+      <p class="tool-desc">Sort text lines with multiple options — ascending, descending, natural sort, and case sensitivity control.</p>
+    </div>
+
+    <div class="options-panel" id="sort-options">
+      <h3>Sorting Options</h3>
+      <div class="options-grid">
+        <div style="display:flex;flex-direction:column;gap:var(--sp-2);">
+          <span class="toggle-label" style="font-weight:500;color:var(--text-primary);margin-bottom:var(--sp-1);">Direction</span>
+          <div class="pill-group" id="sort-direction">
+            <button class="active" data-dir="asc">A → Z (Ascending)</button>
+            <button data-dir="desc">Z → A (Descending)</button>
+          </div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="sort-case-insensitive" />
+          <span class="toggle-track"></span>
+          <span class="toggle-label">Case-Insensitive</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="sort-natural" />
+          <span class="toggle-track"></span>
+          <span class="toggle-label">Natural Sort (alphanumeric)</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="split-panels">
+      <div class="panel glass-card-sm">
+        <div class="panel-header">
+          <span class="panel-title">Input</span>
+          <button class="btn-icon" id="sort-clear" data-tooltip="Clear" aria-label="Clear">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </button>
+        </div>
+        <textarea class="textarea" id="sort-input" placeholder="Paste text to sort..." spellcheck="false" aria-label="Input text" style="border:none;border-radius:0;min-height:320px;"></textarea>
+        <div class="count-bar"><span><strong id="sort-in-lines">0</strong> lines</span></div>
+      </div>
+      <div class="panel glass-card-sm">
+        <div class="panel-header">
+          <span class="panel-title">Output</span>
+          <div class="action-bar">
+            <button class="btn-icon" id="sort-copy" data-tooltip="Copy" aria-label="Copy">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+            <button class="btn-icon" id="sort-download" data-tooltip="Download" aria-label="Download">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            </button>
+          </div>
+        </div>
+        <textarea class="textarea textarea-readonly" id="sort-output" readonly placeholder="Sorted lines will appear here..." aria-label="Output text" style="border:none;border-radius:0;min-height:320px;"></textarea>
+        <div class="count-bar"><span><strong id="sort-out-lines">0</strong> lines</span></div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .tool-page { padding-top: var(--sp-8); padding-bottom: var(--sp-16); }
+  .options-panel { margin-bottom: var(--sp-6); }
+  .panel { overflow: hidden; display: flex; flex-direction: column; }
+</style>
+
+<script>
+  import { sortLines, countLines, copyToClipboard, downloadAsText, formatNumber } from '../scripts/text-utils.js';
+
+  const input = document.getElementById('sort-input');
+  const output = document.getElementById('sort-output');
+  const caseInsensitive = document.getElementById('sort-case-insensitive');
+  const naturalSort = document.getElementById('sort-natural');
+  const dirGroup = document.getElementById('sort-direction');
+  let direction = 'asc';
+
+  function process() {
+    const text = input.value;
+    const caseSensitive = !caseInsensitive.checked;
+    output.value = sortLines(text, direction, caseSensitive, naturalSort.checked);
+
+    document.getElementById('sort-in-lines').textContent = formatNumber(countLines(text));
+    document.getElementById('sort-out-lines').textContent = formatNumber(countLines(output.value));
+  }
+
+  input.addEventListener('input', process);
+  caseInsensitive.addEventListener('change', process);
+  naturalSort.addEventListener('change', process);
+
+  // Direction pills
+  dirGroup?.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      dirGroup.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      direction = btn.dataset.dir;
+      process();
+    });
+  });
+
+  document.getElementById('sort-clear')?.addEventListener('click', () => { input.value = ''; process(); window.showToast?.('Cleared', 'info'); });
+  document.getElementById('sort-copy')?.addEventListener('click', async () => { const ok = await copyToClipboard(output.value); window.showToast?.(ok ? 'Copied!' : 'Failed', ok ? 'success' : 'error'); });
+  document.getElementById('sort-download')?.addEventListener('click', () => { downloadAsText(output.value, 'sorted-lines.txt'); window.showToast?.('Downloaded', 'success'); });
+</script>

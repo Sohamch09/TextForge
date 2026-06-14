@@ -1,0 +1,90 @@
+---
+const testimonials = [
+  {
+    quote: "TextForge replaced my entire workflow of copy-pasting into multiple tools. The Smart Cleaner alone saves me 20 minutes a day processing log files.",
+    name: 'Sarah Chen',
+    role: 'Backend Developer at Stripe',
+    initials: 'SC',
+  },
+  {
+    quote: "As a content writer, I use the Word Counter and Case Converter daily. The real-time processing and clean interface make it a joy compared to older tools.",
+    name: 'Marcus Rivera',
+    role: 'Content Strategist at HubSpot',
+    initials: 'MR',
+  },
+  {
+    quote: "Finally, a text utility site that doesn't look like it was designed in 2005. The dark mode and responsive design are exactly what I needed.",
+    name: 'Aisha Patel',
+    role: 'UX Designer at Figma',
+    initials: 'AP',
+  },
+];
+---
+
+<section class="section testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-eyebrow mono">TESTIMONIALS</span>
+      <h2 class="display-lg">Loved by <span class="text-gradient">Professionals</span></h2>
+      <p class="body-lg text-secondary">
+        See what developers, writers, and designers are saying about TextForge.
+      </p>
+    </div>
+
+    <div class="testimonials-grid stagger-children">
+      {testimonials.map(t => (
+        <div class="testimonial-card">
+          <div class="stars" aria-label="5 out of 5 stars">
+            {[...Array(5)].map(() => (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            ))}
+          </div>
+          <blockquote>"{t.quote}"</blockquote>
+          <div class="author">
+            <div class="avatar">{t.initials}</div>
+            <div class="author-info">
+              <div class="name">{t.name}</div>
+              <div class="role">{t.role}</div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    background: var(--surface-1);
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--sp-12);
+  }
+
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--accent-indigo);
+    margin-bottom: var(--sp-4);
+  }
+
+  .section-header h2 {
+    margin-bottom: var(--sp-4);
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-6);
+  }
+
+  @media (max-width: 1024px) {
+    .testimonials-grid { grid-template-columns: 1fr; }
+  }
+</style>

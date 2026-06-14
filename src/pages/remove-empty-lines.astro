@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Remove Empty Lines — TextForge"
+  description="Clean up blank lines from your text instantly. Remove fully empty lines or whitespace-only lines with live preview."
+>
+  <div class="container tool-page">
+    <div class="tool-header">
+      <div class="breadcrumb">
+        <a href="/">Home</a>
+        <span class="sep">/</span>
+        <span>Remove Empty Lines</span>
+      </div>
+      <h1>Remove <span class="text-gradient">Empty</span> Lines</h1>
+      <p class="tool-desc">Clean up blank lines from your text instantly. Choose between fully empty lines or whitespace-only lines.</p>
+    </div>
+
+    <div class="options-panel" id="empty-options">
+      <h3>Options</h3>
+      <div class="options-grid">
+        <label class="toggle">
+          <input type="checkbox" id="empty-whitespace" checked />
+          <span class="toggle-track"></span>
+          <span class="toggle-label">Include Whitespace-Only Lines</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="split-panels">
+      <div class="panel glass-card-sm">
+        <div class="panel-header">
+          <span class="panel-title">Input</span>
+          <button class="btn-icon" id="empty-clear" data-tooltip="Clear" aria-label="Clear input">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </button>
+        </div>
+        <textarea class="textarea" id="empty-input" placeholder="Paste text with empty lines..." spellcheck="false" aria-label="Input text" style="border:none;border-radius:0;min-height:320px;"></textarea>
+        <div class="count-bar">
+          <span><strong id="empty-in-lines">0</strong> lines</span>
+        </div>
+      </div>
+      <div class="panel glass-card-sm">
+        <div class="panel-header">
+          <span class="panel-title">Output</span>
+          <div class="action-bar">
+            <button class="btn-icon" id="empty-copy" data-tooltip="Copy" aria-label="Copy output">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+            <button class="btn-icon" id="empty-download" data-tooltip="Download" aria-label="Download">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            </button>
+          </div>
+        </div>
+        <textarea class="textarea textarea-readonly" id="empty-output" readonly placeholder="Cleaned text will appear here..." aria-label="Output text" style="border:none;border-radius:0;min-height:320px;"></textarea>
+        <div class="count-bar">
+          <span><strong id="empty-out-lines">0</strong> lines</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-section" style="margin-top:var(--sp-8)">
+      <h3 class="stats-title">Statistics</h3>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-icon indigo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div><div class="stat-label">Lines Before</div><div class="stat-value" id="empty-stat-before">0</div></div>
+        <div class="stat-card"><div class="stat-icon success"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div><div class="stat-label">Lines After</div><div class="stat-value" id="empty-stat-after">0</div></div>
+        <div class="stat-card"><div class="stat-icon error"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg></div><div class="stat-label">Empty Lines Removed</div><div class="stat-value" id="empty-stat-removed">0</div></div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .tool-page { padding-top: var(--sp-8); padding-bottom: var(--sp-16); }
+  .options-panel { margin-bottom: var(--sp-6); }
+  .panel { overflow: hidden; display: flex; flex-direction: column; }
+  .stats-title { font-size: 0.8125rem; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--sp-4); }
+</style>
+
+<script>
+  import { removeEmptyLines, countLines, copyToClipboard, downloadAsText, formatNumber } from '../scripts/text-utils.js';
+
+  const input = document.getElementById('empty-input');
+  const output = document.getElementById('empty-output');
+  const whitespaceCb = document.getElementById('empty-whitespace');
+
+  function process() {
+    const text = input.value;
+    const { result, emptyLinesRemoved } = removeEmptyLines(text, whitespaceCb.checked);
+    output.value = result;
+
+    const il = countLines(text);
+    const ol = countLines(result);
+    document.getElementById('empty-in-lines').textContent = formatNumber(il);
+    document.getElementById('empty-out-lines').textContent = formatNumber(ol);
+    document.getElementById('empty-stat-before').textContent = formatNumber(il);
+    document.getElementById('empty-stat-after').textContent = formatNumber(ol);
+    document.getElementById('empty-stat-removed').textContent = formatNumber(emptyLinesRemoved);
+  }
+
+  input.addEventListener('input', process);
+  whitespaceCb.addEventListener('change', process);
+
+  document.getElementById('empty-clear')?.addEventListener('click', () => { input.value = ''; process(); window.showToast?.('Cleared', 'info'); });
+  document.getElementById('empty-copy')?.addEventListener('click', async () => { const ok = await copyToClipboard(output.value); window.showToast?.(ok ? 'Copied!' : 'Failed', ok ? 'success' : 'error'); });
+  document.getElementById('empty-download')?.addEventListener('click', () => { downloadAsText(output.value, 'empty-lines-removed.txt'); window.showToast?.('Downloaded', 'success'); });
+</script>
