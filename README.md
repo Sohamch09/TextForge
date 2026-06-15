@@ -47,3 +47,5 @@ Contributions are highly encouraged! Whether you want to fix a bug, suggest a ne
 - **Want to add a tool?** Use `src/layouts/ToolPageLayout.astro` as a template.
 
 All PRs for bug fixes, more enhancements, and performance optimizations are welcome.
+
+- **Have a modification to suggest?** If you think of any way to improve the code, design, or project structure, please feel free to suggest it by opening an Issue or starting a discussion!
