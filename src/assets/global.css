@@ -425,6 +425,7 @@ img, video, svg {
 .btn-primary:hover {
   transform: translateY(-1px);
   box-shadow: var(--shadow-md), 0 0 30px rgba(99,102,241,0.25);
+  color: #fff;
 }
 
 .btn-primary:active {

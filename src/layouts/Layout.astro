@@ -2,16 +2,71 @@
 interface Props {
   title?: string;
   description?: string;
+  keywords?: string;
+  canonicalUrl?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
+  robots?: string;
+  author?: string;
 }
 const {
-  title = 'TextForge — Clean, Transform & Analyze Text Instantly',
-  description = 'The modern text utility platform for developers, writers, students, and professionals. Real-time text processing with a premium, ad-free experience.'
+  title = 'Word Counter & Free AI Text Cleaner — TextForge | All-in-One Text Utility Online',
+  description = 'TextForge is a free word counter and AI text cleaner online. Count words, remove duplicate lines from text, convert uppercase to lowercase, generate title case, and clean text instantly — all in one text utility online. 100% free, private, and ad-free.',
+  keywords = 'word counter, word counter free, word counter online, ai text cleaner, ai text cleaner free, all in one text utility online, deduplicate text list online, remove duplicate lines from text, convert uppercase to lowercase, title case generator, change text case instantly',
+  canonicalUrl = '',
+  ogImage = '/og-image.png',
+  ogImageAlt = 'TextForge — Free Word Counter & AI Text Cleaner Online',
+  robots = 'index, follow',
+  author = 'TextForge',
 } = Astro.props;
+
+const siteUrl = 'https://textforge.app';
+const resolvedCanonical = canonicalUrl || `${siteUrl}${Astro.url.pathname}`;
+const resolvedOgImage = ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`;
 
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import ToastContainer from '../components/ToastContainer.astro';
 import '../assets/global.css';
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      "url": siteUrl,
+      "name": "TextForge",
+      "description": "Free word counter, AI text cleaner, and all-in-one text utility online. Count words, remove duplicates, convert case, and clean text instantly.",
+      "publisher": {
+        "@id": `${siteUrl}/#organization`
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": `${siteUrl}/?s={search_term_string}`,
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      "name": "TextForge",
+      "url": siteUrl,
+      "logo": `${siteUrl}/favicon-96x96.png`,
+      "description": "Modern text utility platform — free word counter, AI text cleaner, case converter, and duplicate remover."
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${resolvedCanonical}#webpage`,
+      "url": resolvedCanonical,
+      "name": title,
+      "description": description,
+      "isPartOf": {
+        "@id": `${siteUrl}/#website`
+      }
+    }
+  ]
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -19,14 +74,36 @@ import '../assets/global.css';
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content={author} />
+    <meta name="robots" content={robots} />
     <meta name="theme-color" content="#09090b" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={resolvedCanonical} />
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={resolvedCanonical} />
+    <meta property="og:image" content={resolvedOgImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta property="og:site_name" content="TextForge" />
     <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={resolvedOgImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
